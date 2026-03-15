@@ -1,26 +1,142 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+@theme {
+  --color-base-dark: #1a1118;
+  --color-surface: #231520;
+  --color-jacarta: #3A345B;
+  --color-old-lavender: #71557A;
+  --color-middle-purple: #D183A9;
+  --color-queen-pink: #F3C8DD;
+  --color-brown-chocolate: #4B1535;
+  
+  --color-accent-primary: #D183A9;
+  --color-accent-secondary: #F3C8DD;
+  --color-accent-glow: rgba(209, 131, 169, 0.2);
+  
+  --color-text-main: #F3C8DD;
+  --color-text-body: #e8d5e0;
+  --color-text-muted: #71557A;
+
+  /* 3D Theme Colors */
+  --space-bg: #060910;
+  --nebula-purple: #3A345B;
+  --accent-pink: #D183A9;
+  --accent-light: #F3C8DD;
+  --glow-pink: rgba(209, 131, 169, 0.6);
+  --island-surface: #1a1118;
+  --deep-dark: #0B0F19;
+
+  --font-playfair: var(--font-playfair);
+  --font-inter: var(--font-inter);
+  --font-jetbrains-mono: var(--font-jetbrains-mono);
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+@layer utilities {
+  .glass {
+    backdrop-filter: blur(20px);
+    background-color: rgba(58, 52, 91, 0.6);
+    border-bottom: 1px solid rgba(209, 131, 169, 0.2);
+  }
+  .glass-card {
+    background-color: var(--color-surface);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(209, 131, 169, 0.1);
+    border-radius: 1.5rem;
+  }
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  .no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  .preserve-3d {
+    transform-style: preserve-3d;
+  }
+  .bg-gradient-hero {
+    background-image: radial-gradient(ellipse at top, #3A345B 0%, #1a1118 60%, #4B1535 100%);
+  }
+  .bg-gradient-alt {
+    background-image: linear-gradient(180deg, #1a1118 0%, #231520 100%);
+  }
+  .bg-gradient-accent {
+    background-image: linear-gradient(135deg, #D183A9 0%, #71557A 100%);
+  }
+  .bg-gradient-contact {
+    background-image: linear-gradient(180deg, #1a1118 0%, #4B1535 60%, #D183A9 100%);
+  }
+  .webgl-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 0;
+    pointer-events: none; /* Let HTML pointer events pass through by default if needed, though R3F handles this */
   }
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
+::-webkit-scrollbar {
+  width: 4px;
+}
+::-webkit-scrollbar-track {
+  background: #1a1118;
+}
+::-webkit-scrollbar-thumb {
+  background: #D183A9;
+  border-radius: 2px;
+}
+
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background-color: var(--color-base-dark);
+  color: var(--color-text-body);
+  font-family: var(--font-inter);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body ::selection {
+  background-color: rgba(209, 131, 169, 0.3);
+  color: var(--color-queen-pink);
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-playfair);
+  color: var(--color-text-main);
+}
+
+/* Film Grain Overlay */
+.film-grain {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+  z-index: 9999;
+  opacity: 0.03;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+}
+
+/* Grid Pattern for Skills/Hero Backgrounds */
+.bg-grid-pattern {
+  background-image: 
+    linear-gradient(to right, rgba(209, 131, 169, 0.03) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(209, 131, 169, 0.03) 1px, transparent 1px);
+  background-size: 4rem 4rem;
+}
+
+/* Hide anchor hash symbols on headings */
+h1 a, h2 a, h3 a, h4 a,
+h1 .anchor, h2 .anchor, h3 .anchor {
+  display: none !important;
+}
+
+h1::before, h2::before, h3::before,
+h1::after, h2::after, h3::after {
+  content: none !important;
 }
