@@ -65,17 +65,14 @@ function CyberGrid() {
       <lineSegments>
         <bufferGeometry ref={geometryRef}>
           <bufferAttribute
-            attach="attributes-position"
-            count={positions.length / 3}
-            array={positions}
-            itemSize={3}
-          />
-          <bufferAttribute
-            attach="attributes-color"
-            count={colors.length / 3}
-            array={colors}
-            itemSize={3}
-          />
+  attach="attributes-position"
+  args={[positions, 3]}
+/>
+
+<bufferAttribute
+  attach="attributes-color"
+  args={[colors, 3]}
+/>
         </bufferGeometry>
         <lineBasicMaterial vertexColors transparent opacity={0.15} blending={THREE.AdditiveBlending} />
       </lineSegments>
@@ -94,14 +91,13 @@ export default function ThreeBackgroundGrid() {
         <CyberGrid />
 
         {/* Post-processing Bloom for the grid lines */}
-        <EffectComposer disableNormalPass>
-          <Bloom
-            luminanceThreshold={0}
-            luminanceSmoothing={1}
-            intensity={1.5}
-            mipmapBlur
-          />
-        </EffectComposer>
+        <EffectComposer enableNormalPass={false}>
+  <Bloom
+    luminanceThreshold={0}
+    luminanceSmoothing={1}
+    intensity={1.2}
+  />
+</EffectComposer>
       </Canvas>
       
       {/* Vignette overlay */}
