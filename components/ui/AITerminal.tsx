@@ -148,6 +148,18 @@ export default function AITerminal() {
       scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
     }
   }, [messages, isTyping]);
+  useEffect(() => {
+  const hasSeenAssistant = sessionStorage.getItem("seenPortfolioAssistant");
+
+  if (!hasSeenAssistant) {
+    const timer = setTimeout(() => {
+      setIsOpen(true);
+      sessionStorage.setItem("seenPortfolioAssistant", "true");
+    }, 3000);
+
+    return () => clearTimeout(timer);
+  }
+}, []);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -307,9 +319,16 @@ export default function AITerminal() {
         )}
       </AnimatePresence>
 
+
+      {!isOpen && (
+  <div className="mb-2 rounded-full bg-[#D183A9]/20 px-4 py-2 text-s text-[#F3C8DD] shadow-md backdrop-blur-md animate-bounce">
+    Ask me anything 👋
+  </div>
+)}
+
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="group relative flex h-14 w-14 cursor-pointer items-center justify-center overflow-hidden rounded-full border-2 border-[#D183A9]/50 bg-[rgba(15,10,18,0.9)] text-[#D183A9] shadow-[0_0_20px_rgba(209,131,169,0.3)] transition-all duration-300 hover:-translate-y-1 hover:scale-105 hover:border-[#D183A9] hover:shadow-[0_0_30px_rgba(209,131,169,0.6)] active:scale-95"
+        className="group relative flex h-16 w-16 cursor-pointer items-center justify-center overflow-hidden rounded-full border-2 border-[#D183A9]/50 bg-[rgba(15,10,18,0.9)] text-[#D183A9] shadow-[0_0_20px_rgba(209,131,169,0.3)] transition-all duration-300 hover:-translate-y-1 hover:scale-105 hover:border-[#D183A9] hover:shadow-[0_0_30px_rgba(209,131,169,0.6)] active:scale-95"
       >
         <div className="absolute inset-0 bg-[#D183A9]/10 transition-colors group-hover:bg-[#D183A9]/20" />
         {isOpen ? (
