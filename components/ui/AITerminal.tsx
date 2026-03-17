@@ -2,40 +2,118 @@
 import React, { useState, useRef, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
-// Pre-trained mock database about Fathima
 const brain = {
-  greetings: ["Hi there! I'm an AI assistant trained on Fathima Fildha's resume. Ask me anything about her skills, experience, or projects!"],
-  fallback: "I'm not exactly sure about that based on my training data. Feel free to contact Fathima directly at fathfildhap@gmail.com!",
-  keywords: [
+  greeting:
+    "Hi there! I'm Fildha's portfolio assistant. Ask me about her skills, projects, education, experience, AI learning, or contact details.",
+
+  fallback:
+    "I’m not sure about that from the portfolio data. Try asking about skills, projects, education, experience, AI learning, or contact details.",
+
+  faq: [
     {
-      match: ["django", "python", "backend"],
-      response: "Fathima has strong backend skills using Python and Django. She recently interned at HACA Calicut as a Full Stack Django Developer where she built CRUD workflows and integrated backend services!"
+      patterns: [
+        "what are her skills",
+        "skills",
+        "technical skills",
+        "what skills does she have",
+      ],
+      response:
+        "Fathima’s core skills include Python, Django, React, JavaScript, Tailwind CSS, REST APIs, FastAPI, MySQL, Streamlit, OpenAI API, Prompt Engineering, NumPy, Pandas, Matplotlib, Git, and GitHub.",
     },
     {
-      match: ["react", "frontend", "css", "tailwind"],
-      response: "Yes! Fathima builds dynamic frontends using React, Tailwind CSS, JavaScript, and Redux. She built this entire portfolio using Next.js and React physics libraries!"
+      patterns: [
+        "react",
+        "does she know react",
+        "frontend",
+        "javascript",
+        "tailwind",
+      ],
+      response:
+        "Yes, Fathima works with React, JavaScript, HTML, CSS, and Tailwind CSS. She uses React for frontend development and built her portfolio with a React and Next.js based setup.",
     },
     {
-      match: ["genai", "ai", "llm", "prompt", "chatgpt"],
-      response: "GenAI is her current focus! Fathima is skilled in Prompt Engineering, Structured LLM Apps, and working with the OpenAI API. She's currently expanding her knowledge into Langchain, RAG, and Vector Databases."
+      patterns: ["python", "django", "backend", "rest api", "fastapi"],
+      response:
+        "Yes, Fathima has strong backend skills in Python and Django, and she is also learning and working with FastAPI and REST API based application development.",
     },
     {
-      match: ["database", "sql", "mysql"],
-      response: "Fathima primarily uses MySQL for her relational database management and backend architectures."
+      patterns: ["ai", "genai", "openai", "prompt engineering", "streamlit"],
+      response:
+        "Fathima has worked with OpenAI API, Prompt Engineering, structured LLM-based applications, AI image generation, and Streamlit-based AI apps. She is currently learning more AI engineering topics as well.",
     },
     {
-      match: ["projects", "built", "work"],
-      response: "Fathima has built several impressive projects! Some highlights include 'SafeSphere' (a comprehensive women's safety app), 'LegalLens' (an AI-powered legal document analyzer), and 'InclusiLearn' (an adaptive learning platform). Check the Projects section for links!"
+      patterns: [
+        "what is her education",
+        "education",
+        "degree",
+        "college",
+        "university",
+      ],
+      response:
+        "Fathima completed a Bachelor of Technology in Computer Science Engineering from APJ Abdul Kalam Technological University, Kerala, from 2021 to 2025.",
     },
     {
-      match: ["contact", "email", "hire", "job"],
-      response: "You can reach Fathima directly at fathfildhap@gmail.com, or check out her GitHub at github.com/fildha-p. She's currently open to work!"
+      patterns: ["experience", "internship", "work experience", "haca"],
+      response:
+        "Fathima worked as a Python Full Stack Development plus Generative AI Intern at HACA, Calicut from September 2025 to March 2026. She worked on Django, React, MySQL, CRUD workflows, backend integration, and AI-assisted development tasks.",
     },
     {
-      match: ["education", "degree", "university", "college"],
-      response: "Fathima is graduating in 2025 with a B.Tech in Computer Science Engineering from APJ Abdul Kalam Technological University."
-    }
-  ]
+      patterns: [
+        "projects",
+        "what projects",
+        "portfolio projects",
+        "built",
+      ],
+      response:
+        "Some of Fathima’s featured projects include SkillMap, My Wedding Planner, AI Agent Explorer, Community Complaint and Issue Reporting System, and Election Vote Percentage Calculator.",
+    },
+    {
+      patterns: ["skillmap"],
+      response:
+        "SkillMap is a role-based skill assessment platform built using Django, MySQL, HTML, CSS, and JavaScript. It helps users evaluate readiness for tech roles through assessments, progress tracking, dashboards, and authentication.",
+    },
+    {
+      patterns: ["wedding", "wedding planner", "event generator"],
+      response:
+        "My Wedding Planner is a web-based event planning application with CRUD functionality, budget tracking, form handling, and Redux Persist for state persistence. Fathima also built an AI-based Wedding and Party Theme Generator using Streamlit and OpenAI.",
+    },
+    {
+      patterns: ["ai agent explorer", "agent explorer", "ai project"],
+      response:
+        "AI Agent Explorer is an AI application that demonstrates structured LLM workflows, API integrations, and Pydantic-based structured outputs through an interactive Streamlit interface.",
+    },
+    {
+      patterns: [
+        "community complaint",
+        "complaint system",
+        "issue reporting",
+      ],
+      response:
+        "Community Complaint and Issue Reporting System is a CRUD-based complaint management application backed by MySQL for submitting, tracking, and managing local issues.",
+    },
+    {
+      patterns: ["election", "vote calculator", "data analysis"],
+      response:
+        "Election Vote Percentage Calculator is a Python-based data analysis project using Pandas, NumPy, and Matplotlib to process election data and generate vote percentage charts.",
+    },
+    {
+      patterns: [
+        "is she learning ai",
+        "currently learning",
+        "learning ai",
+        "rag",
+        "langchain",
+        "embeddings",
+      ],
+      response:
+        "Yes, Fathima is currently learning AI engineering topics such as RAG, LangChain, embeddings, semantic search, vector databases, Ollama, HuggingFace, and Pydantic.",
+    },
+    {
+      patterns: ["contact", "email", "github", "linkedin", "hire"],
+      response:
+        "You can contact Fathima at fathfildhap@gmail.com. Her GitHub is github.com/fildha-p. You can also connect with her through the contact section on this portfolio.",
+    },
+  ],
 };
 
 interface Message {
@@ -44,10 +122,22 @@ interface Message {
   text: string;
 }
 
+const generateResponse = (input: string) => {
+  const query = input.toLowerCase().trim();
+
+  for (const item of brain.faq) {
+    if (item.patterns.some((pattern) => query.includes(pattern))) {
+      return item.response;
+    }
+  }
+
+  return brain.fallback;
+};
+
 export default function AITerminal() {
   const [isOpen, setIsOpen] = useState(false);
   const [messages, setMessages] = useState<Message[]>([
-    { id: "1", sender: "ai", text: brain.greetings[0] }
+    { id: "1", sender: "ai", text: brain.greeting },
   ]);
   const [inputValue, setInputValue] = useState("");
   const [isTyping, setIsTyping] = useState(false);
@@ -59,133 +149,197 @@ export default function AITerminal() {
     }
   }, [messages, isTyping]);
 
-  const generateResponse = (input: string) => {
-    const query = input.toLowerCase();
-    
-    // Simple keyword matching search
-    let matchedResponse = brain.fallback;
-    for (const rule of brain.keywords) {
-      if (rule.match.some(keyword => query.includes(keyword))) {
-        matchedResponse = rule.response;
-        break;
-      }
-    }
-
-    return matchedResponse;
-  };
-
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (!inputValue.trim()) return;
+    if (!inputValue.trim() || isTyping) return;
 
-    const userMsg: Message = { id: Date.now().toString(), sender: "user", text: inputValue };
-    setMessages(prev => [...prev, userMsg]);
+    const userText = inputValue.trim();
+
+    const userMsg: Message = {
+      id: Date.now().toString(),
+      sender: "user",
+      text: userText,
+    };
+
+    setMessages((prev) => [...prev, userMsg]);
     setInputValue("");
     setIsTyping(true);
 
-    // Simulate AI thinking delay
     setTimeout(() => {
-      const responseText = generateResponse(userMsg.text);
-      setMessages(prev => [...prev, { id: Date.now().toString(), sender: "ai", text: responseText }]);
+      const aiMsg: Message = {
+        id: (Date.now() + 1).toString(),
+        sender: "ai",
+        text: generateResponse(userText),
+      };
+
+      setMessages((prev) => [...prev, aiMsg]);
       setIsTyping(false);
-    }, 800 + Math.random() * 1000);
+    }, 600);
   };
 
   return (
     <div className="fixed bottom-6 right-6 z-50 flex flex-col items-end">
       <AnimatePresence>
         {isOpen && (
-          <motion.div 
+          <motion.div
             initial={{ opacity: 0, y: 20, scale: 0.95 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 20, scale: 0.95 }}
             transition={{ duration: 0.2 }}
-            className="mb-4 w-[320px] md:w-[380px] h-[450px] bg-[rgba(11,15,25,0.95)] backdrop-blur-xl border border-[rgba(209,131,169,0.3)] shadow-[0_10px_40px_rgba(209,131,169,0.2)] rounded-2xl flex flex-col overflow-hidden font-jetbrains-mono"
+            className="mb-4 flex h-[450px] w-[320px] flex-col overflow-hidden rounded-2xl border border-[rgba(209,131,169,0.3)] bg-[rgba(11,15,25,0.95)] font-jetbrains-mono shadow-[0_10px_40px_rgba(209,131,169,0.2)] backdrop-blur-xl md:w-[380px]"
           >
-            {/* Header */}
-            <div className="flex items-center justify-between px-4 py-3 bg-[rgba(15,10,18,0.8)] border-b border-[rgba(209,131,169,0.2)]">
+            <div className="flex items-center justify-between border-b border-[rgba(209,131,169,0.2)] bg-[rgba(15,10,18,0.8)] px-4 py-3">
               <div className="flex items-center gap-3">
                 <div className="relative flex h-3 w-3">
-                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#D183A9] opacity-75"></span>
-                  <span className="relative inline-flex rounded-full h-3 w-3 bg-[#D183A9]"></span>
+                  <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-[#D183A9] opacity-75"></span>
+                  <span className="relative inline-flex h-3 w-3 rounded-full bg-[#D183A9]"></span>
                 </div>
-                <span className="text-sm font-bold text-[#F3C8DD]">Ask Fildha AI</span>
+                <span className="text-sm font-bold text-[#F3C8DD]">
+                  Ask Fildha AI
+                </span>
               </div>
-              <button 
+              <button
                 onClick={() => setIsOpen(false)}
-                className="text-[#71557A] hover:text-[#D183A9] transition-colors"
+                className="text-[#71557A] transition-colors hover:text-[#D183A9]"
                 title="Close Terminal"
               >
-                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" /></svg>
+                <svg
+                  className="h-5 w-5"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M6 18L18 6M6 6l12 12"
+                  />
+                </svg>
               </button>
             </div>
 
-            {/* Chat Area */}
-            <div ref={scrollRef} className="flex-1 overflow-y-auto p-4 flex flex-col gap-4 scrollbar-thin scrollbar-thumb-[rgba(209,131,169,0.3)] scrollbar-track-transparent">
+            <div
+              ref={scrollRef}
+              className="scrollbar-thin scrollbar-thumb-[rgba(209,131,169,0.3)] scrollbar-track-transparent flex flex-1 flex-col gap-4 overflow-y-auto p-4"
+            >
               {messages.map((msg) => (
-                <div 
-                  key={msg.id} 
-                  className={`flex flex-col max-w-[85%] ${msg.sender === "user" ? "self-end items-end" : "self-start items-start"}`}
+                <div
+                  key={msg.id}
+                  className={`flex max-w-[85%] flex-col ${
+                    msg.sender === "user"
+                      ? "self-end items-end"
+                      : "self-start items-start"
+                  }`}
                 >
-                  <span className="text-[10px] text-[#71557A] mb-1 font-bold">
-                    {msg.sender === "user" ? "GUEST" : "SYSTEM"}
+                  <span className="mb-1 text-[10px] font-bold text-[#71557A]">
+                    {msg.sender === "user" ? "YOU" : "ASSISTANT"}
                   </span>
-                  <div 
-                    className={`px-3 py-2 rounded-xl text-sm leading-relaxed ${
-                      msg.sender === "user" 
-                        ? "bg-[#D183A9]/20 text-[#F3C8DD] border border-[#D183A9]/30 rounded-tr-none" 
-                        : "bg-[rgba(15,10,18,0.6)] text-[var(--color-text-body)] border border-[rgba(113,85,122,0.3)] rounded-tl-none"
+                  <div
+                    className={`rounded-xl px-3 py-2 text-sm leading-relaxed ${
+                      msg.sender === "user"
+                        ? "rounded-tr-none border border-[#D183A9]/30 bg-[#D183A9]/20 text-[#F3C8DD]"
+                        : "rounded-tl-none border border-[rgba(113,85,122,0.3)] bg-[rgba(15,10,18,0.6)] text-[var(--color-text-body)]"
                     }`}
                   >
                     {msg.text}
                   </div>
                 </div>
               ))}
-              
+
               {isTyping && (
-                <div className="self-start max-w-[85%] flex flex-col items-start">
-                   <span className="text-[10px] text-[#71557A] mb-1 font-bold">SYSTEM</span>
-                   <div className="px-4 py-3 bg-[rgba(15,10,18,0.6)] border border-[rgba(113,85,122,0.3)] rounded-xl rounded-tl-none flex items-center gap-1">
-                      <div className="w-1.5 h-1.5 rounded-full bg-[#D183A9] animate-bounce" style={{ animationDelay: "0ms" }} />
-                      <div className="w-1.5 h-1.5 rounded-full bg-[#D183A9] animate-bounce" style={{ animationDelay: "150ms" }} />
-                      <div className="w-1.5 h-1.5 rounded-full bg-[#D183A9] animate-bounce" style={{ animationDelay: "300ms" }} />
-                   </div>
+                <div className="self-start flex max-w-[85%] flex-col items-start">
+                  <span className="mb-1 text-[10px] font-bold text-[#71557A]">
+                    ASSISTANT
+                  </span>
+                  <div className="flex items-center gap-1 rounded-xl rounded-tl-none border border-[rgba(113,85,122,0.3)] bg-[rgba(15,10,18,0.6)] px-4 py-3">
+                    <div
+                      className="h-1.5 w-1.5 animate-bounce rounded-full bg-[#D183A9]"
+                      style={{ animationDelay: "0ms" }}
+                    />
+                    <div
+                      className="h-1.5 w-1.5 animate-bounce rounded-full bg-[#D183A9]"
+                      style={{ animationDelay: "150ms" }}
+                    />
+                    <div
+                      className="h-1.5 w-1.5 animate-bounce rounded-full bg-[#D183A9]"
+                      style={{ animationDelay: "300ms" }}
+                    />
+                  </div>
                 </div>
               )}
             </div>
 
-            {/* Input Area */}
-            <form onSubmit={handleSubmit} className="p-3 bg-[rgba(15,10,18,0.8)] border-t border-[rgba(209,131,169,0.2)] flex gap-2">
-              <input 
-                type="text" 
+            <form
+              onSubmit={handleSubmit}
+              className="flex gap-2 border-t border-[rgba(209,131,169,0.2)] bg-[rgba(15,10,18,0.8)] p-3"
+            >
+              <input
+                type="text"
                 value={inputValue}
                 onChange={(e) => setInputValue(e.target.value)}
                 placeholder="Ask about my skills..."
-                className="flex-1 bg-[rgba(11,15,25,0.6)] border border-[rgba(113,85,122,0.4)] rounded-lg px-3 py-2 text-sm text-[#F3C8DD] placeholder-[#71557A] focus:outline-none focus:border-[#D183A9] transition-colors"
+                className="flex-1 rounded-lg border border-[rgba(113,85,122,0.4)] bg-[rgba(11,15,25,0.6)] px-3 py-2 text-sm text-[#F3C8DD] placeholder-[#71557A] transition-colors focus:border-[#D183A9] focus:outline-none"
                 disabled={isTyping}
               />
-              <button 
+              <button
                 type="submit"
                 disabled={!inputValue.trim() || isTyping}
-                className="bg-[#D183A9] text-white p-2 rounded-lg hover:bg-[#a8627f] disabled:opacity-50 disabled:cursor-not-allowed transition-colors flex items-center justify-center shrink-0"
+                className="flex shrink-0 items-center justify-center rounded-lg bg-[#D183A9] p-2 text-white transition-colors hover:bg-[#a8627f] disabled:cursor-not-allowed disabled:opacity-50"
                 title="Send Message"
               >
-                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" /></svg>
+                <svg
+                  className="h-4 w-4"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M14 5l7 7m0 0l-7 7m7-7H3"
+                  />
+                </svg>
               </button>
             </form>
           </motion.div>
         )}
       </AnimatePresence>
 
-      <button 
+      <button
         onClick={() => setIsOpen(!isOpen)}
-        className="w-14 h-14 bg-[rgba(15,10,18,0.9)] border-2 border-[#D183A9]/50 hover:border-[#D183A9] shadow-[0_0_20px_rgba(209,131,169,0.3)] hover:shadow-[0_0_30px_rgba(209,131,169,0.6)] rounded-full flex items-center justify-center text-[#D183A9] transition-all group overflow-hidden"
+        className="group relative flex h-14 w-14 cursor-pointer items-center justify-center overflow-hidden rounded-full border-2 border-[#D183A9]/50 bg-[rgba(15,10,18,0.9)] text-[#D183A9] shadow-[0_0_20px_rgba(209,131,169,0.3)] transition-all duration-300 hover:-translate-y-1 hover:scale-105 hover:border-[#D183A9] hover:shadow-[0_0_30px_rgba(209,131,169,0.6)] active:scale-95"
       >
-        <div className="absolute inset-0 bg-[#D183A9]/10 group-hover:bg-[#D183A9]/20 transition-colors" />
+        <div className="absolute inset-0 bg-[#D183A9]/10 transition-colors group-hover:bg-[#D183A9]/20" />
         {isOpen ? (
-          <svg className="w-6 h-6 relative z-10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M6 18L18 6M6 6l12 12" /></svg>
+          <svg
+            className="relative z-10 h-7 w-7"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={2.5}
+              d="M6 18L18 6M6 6l12 12"
+            />
+          </svg>
         ) : (
-          <svg className="w-6 h-6 relative z-10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.2} d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z" /></svg>
+          <svg
+            className="relative z-10 h-7 w-7"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={2.2}
+              d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z"
+            />
+          </svg>
         )}
       </button>
     </div>
