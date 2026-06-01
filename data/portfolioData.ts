@@ -96,7 +96,7 @@ export const projectsData = [
     description:
       "Responsive event planning web app that helps couples manage budgets, vendors, and event tasks in one place. Built with Redux Persist for state persistence across sessions, form validation, and budget tracking.",
     tags: ["React", "Redux Persist", "Tailwind CSS"],
-    links: { view: "https://my-portfolio-qein.vercel.app/", github: "https://github.com/fildha-p/My-Wedding-Planner.git" },
+    links: { view: "https://my-wedding-planner-five.vercel.app/", github: "https://github.com/fildha-p/My-Wedding-Planner.git" },
   },
 ];
 
