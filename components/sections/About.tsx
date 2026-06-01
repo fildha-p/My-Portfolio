@@ -1,6 +1,7 @@
 "use client";
 import { useState, useRef, MouseEvent } from "react";
 import { motion } from "framer-motion";
+import { aboutData } from "@/data/portfolioData";
 
 export default function About() {
   const cardRef = useRef<HTMLDivElement>(null);
@@ -30,8 +31,8 @@ export default function About() {
 
   const codeString = `const fathima = {
   role: "Full Stack Developer",
-  stack: ["Django", "React", "Python"],
-  exploring: ["AI Agents", "LLMs", "OpenAI"],
+  stack: ["Django", "React", "PostgreSQL", "AWS"],
+  exploring: ["OpenAI API", "Streamlit", "Image Generation"],
   status: "open_to_opportunities",
   location: "Kerala, India 🌴"
 };`;
@@ -60,27 +61,18 @@ export default function About() {
           </h3>
           
           <div className="font-inter text-[var(--color-text-body)] text-lg leading-relaxed flex flex-col gap-4">
-            <p>
-              I'm a Full Stack Developer from Kerala with a strong foundation in Django, React, and modern web architecture. My work focuses on building scalable web applications that combine clean backend logic with intuitive user experiences.
-            </p>
-            <p>
-              Recently, I've been heavily exploring Generative AI — experimenting with AI agents, OpenAI APIs, and structured LLM applications to build intelligent data tools. My approach bridges the gap between raw data sets and elegant frontend visualization.
-            </p>
+            {aboutData.copy.map((paragraph, idx) => (
+              <p key={idx}>{paragraph}</p>
+            ))}
           </div>
 
           <div className="flex flex-wrap gap-8 mt-6">
-            <div className="flex flex-col">
-              <span className="font-playfair text-4xl text-[#D183A9] font-bold">5+</span>
-              <span className="font-jetbrains-mono text-xs text-[var(--color-text-muted)] mt-1 uppercase tracking-wider">Completed Projects</span>
-            </div>
-            <div className="flex flex-col">
-              <span className="font-playfair text-4xl text-[#D183A9] font-bold">B.Tech</span>
-              <span className="font-jetbrains-mono text-xs text-[var(--color-text-muted)] mt-1 uppercase tracking-wider">Computer Science</span>
-            </div>
-            <div className="flex flex-col">
-              <span className="font-playfair text-4xl text-[#D183A9] font-bold">GenAI</span>
-              <span className="font-jetbrains-mono text-xs text-[var(--color-text-muted)] mt-1 uppercase tracking-wider">Explorer Track</span>
-            </div>
+            {aboutData.stats.map((stat, idx) => (
+              <div key={idx} className="flex flex-col">
+                <span className="font-playfair text-4xl text-[#D183A9] font-bold">{stat.value}</span>
+                <span className="font-jetbrains-mono text-xs text-[var(--color-text-muted)] mt-1 uppercase tracking-wider">{stat.label}</span>
+              </div>
+            ))}
           </div>
         </motion.div>
 

@@ -1,17 +1,9 @@
 "use client";
 import { motion, Variants } from "framer-motion";
 import SkillBouncer from "../ui/SkillBouncer";
+import { skillsData } from "@/data/portfolioData";
 
 export default function Skills() {
-  const skills = [
-    { category: "Frontend", items: ["ReactJS", "JavaScript", "Redux", "Tailwind CSS", "HTML", "CSS"] },
-    { category: "Backend", items: ["Django", "Python", "REST APIs", "Authentication", "CRUD"] },
-    { category: "Database", items: ["MySQL"] },
-    { category: "AI/GenAI", items: ["Prompt Engineering", "AI Agents", "OpenAI API", "Structured LLM Applications"] },
-    { category: "Data Analysis", items: ["NumPy", "Pandas", "Matplotlib", "Power BI"] },
-    { category: "Tools & Ecosystem", items: ["Git", "GitHub", "VS Code", "n8n"] },
-  ];
-
   const containerVariants: Variants = {
     hidden: { opacity: 0 },
     visible: { opacity: 1, transition: { staggerChildren: 0.15 } }
@@ -48,7 +40,7 @@ export default function Skills() {
           viewport={{ once: true, margin: "-100px" }}
           className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mt-4"
         >
-          {skills.map((skill, idx) => (
+          {skillsData.map((skill, idx) => (
             <motion.div 
               key={idx} 
               variants={itemVariants}

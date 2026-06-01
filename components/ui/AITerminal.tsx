@@ -7,7 +7,7 @@ const brain = {
     "Hi there! I'm Fildha's portfolio assistant. Ask me about her skills, projects, education, experience, AI learning, or contact details.",
 
   fallback:
-    "I’m not sure about that from the portfolio data. Try asking about skills, projects, education, experience, AI learning, or contact details.",
+    "I'm not sure about that from the portfolio data. Try asking about skills, projects, education, experience, AI learning, or contact details.",
 
   faq: [
     {
@@ -18,7 +18,7 @@ const brain = {
         "what skills does she have",
       ],
       response:
-        "Fathima’s core skills include Python, Django, React, JavaScript, Tailwind CSS, REST APIs, FastAPI, MySQL, Streamlit, OpenAI API, Prompt Engineering, NumPy, Pandas, Matplotlib, Git, and GitHub.",
+        "Fathima's core skills include Python, Django, React, JavaScript, Tailwind CSS, REST APIs, MySQL, PostgreSQL, Streamlit, OpenAI API, Prompt Engineering, Image Generation, NumPy, Pandas, Matplotlib, Git, GitHub, AWS, Razorpay, and Zoho.",
     },
     {
       patterns: [
@@ -29,17 +29,17 @@ const brain = {
         "tailwind",
       ],
       response:
-        "Yes, Fathima works with React, JavaScript, HTML, CSS, and Tailwind CSS. She uses React for frontend development and built her portfolio with a React and Next.js based setup.",
+        "Yes, Fathima works with React, JavaScript, HTML, CSS, and Tailwind CSS. She uses React for frontend development and has built responsive web applications with modern UI workflows.",
     },
     {
       patterns: ["python", "django", "backend", "rest api", "fastapi"],
       response:
-        "Yes, Fathima has strong backend skills in Python and Django, and she is also learning and working with FastAPI and REST API based application development.",
+        "Yes, Fathima has strong backend skills in Python, Django, REST APIs, authentication, CRUD workflows, MySQL, and PostgreSQL. She has also deployed Django applications on AWS.",
     },
     {
       patterns: ["ai", "genai", "openai", "prompt engineering", "streamlit"],
       response:
-        "Fathima has worked with OpenAI API, Prompt Engineering, structured LLM-based applications, AI image generation, and Streamlit-based AI apps. She is currently learning more AI engineering topics as well.",
+        "Fathima has worked with OpenAI API, Prompt Engineering, AI image generation, structured LLM applications, and Streamlit-based AI apps including AI Data Analyst, Wedding/Party Theme Generator, and Branding Assistant.",
     },
     {
       patterns: [
@@ -55,7 +55,7 @@ const brain = {
     {
       patterns: ["experience", "internship", "work experience", "haca"],
       response:
-        "Fathima worked as a Python Full Stack Development plus Generative AI Intern at HACA, Calicut from September 2025 to March 2026. She worked on Django, React, MySQL, CRUD workflows, backend integration, and AI-assisted development tasks.",
+        "Fathima is a Software Developer at Void Vector Ventures LLP, Calicut from March 2026 to present. She previously worked as a Python Full Stack Development plus Generative AI Intern at HACA, Calicut from September 2025 to March 2026.",
     },
     {
       patterns: [
@@ -65,53 +65,47 @@ const brain = {
         "built",
       ],
       response:
-        "Some of Fathima’s featured projects include SkillMap, My Wedding Planner, AI Agent Explorer, Community Complaint and Issue Reporting System, and Election Vote Percentage Calculator.",
+        "Some of Fathima's featured projects include SkillMap, AI Data Analyst, Wedding/Party Theme Generator, Branding Assistant, and My Wedding Planner.",
     },
     {
       patterns: ["skillmap"],
       response:
-        "SkillMap is a role-based skill assessment platform built using Django, MySQL, HTML, CSS, and JavaScript. It helps users evaluate readiness for tech roles through assessments, progress tracking, dashboards, and authentication.",
+        "SkillMap is a role-based skill assessment platform built using Django, MySQL, JavaScript, HTML, and CSS. It helps users evaluate readiness for tech roles through dashboards, readiness scores, skill progression, and session-based authentication.",
     },
     {
       patterns: ["wedding", "wedding planner", "event generator"],
       response:
-        "My Wedding Planner is a web-based event planning application with CRUD functionality, budget tracking, form handling, and Redux Persist for state persistence. Fathima also built an AI-based Wedding and Party Theme Generator using Streamlit and OpenAI.",
+        "Fathima built My Wedding Planner using React, Redux Persist, and Tailwind CSS. She also built a Wedding/Party Theme Generator using Streamlit and OpenAI API to generate theme titles, taglines, invitation text, decoration ideas, color palettes, and invitation card visuals.",
     },
     {
-      patterns: ["ai agent explorer", "agent explorer", "ai project"],
+      patterns: ["ai data analyst", "data analyst", "csv", "data analysis"],
       response:
-        "AI Agent Explorer is an AI application that demonstrates structured LLM workflows, API integrations, and Pydantic-based structured outputs through an interactive Streamlit interface.",
+        "AI Data Analyst is a Streamlit app where users can upload CSV files, explore datasets, view statistics and visualizations, and ask natural language questions powered by OpenAI API.",
     },
     {
-      patterns: [
-        "community complaint",
-        "complaint system",
-        "issue reporting",
-      ],
+      patterns: ["branding", "branding assistant", "logo"],
       response:
-        "Community Complaint and Issue Reporting System is a CRUD-based complaint management application backed by MySQL for submitting, tracking, and managing local issues.",
+        "Branding Assistant is a Streamlit app that generates brand names, slogans, and AI-designed logos from a business idea using OpenAI API and image generation.",
     },
     {
-      patterns: ["election", "vote calculator", "data analysis"],
+      patterns: ["void vector", "software developer", "aws", "razorpay", "zoho"],
       response:
-        "Election Vote Percentage Calculator is a Python-based data analysis project using Pandas, NumPy, and Matplotlib to process election data and generate vote percentage charts.",
+        "At Void Vector Ventures LLP, Fathima built and deployed the company website using Django, Python, PostgreSQL, and AWS, and integrated Razorpay payment gateway and Zoho CRM tools.",
     },
     {
       patterns: [
         "is she learning ai",
         "currently learning",
         "learning ai",
-        "rag",
-        "langchain",
-        "embeddings",
+        "image generation",
       ],
       response:
-        "Yes, Fathima is currently learning AI engineering topics such as RAG, LangChain, embeddings, semantic search, vector databases, Ollama, HuggingFace, and Pydantic.",
+        "Yes, Fathima is actively exploring Generative AI through OpenAI API, prompt engineering, image generation, Streamlit, and AI-powered application development.",
     },
     {
       patterns: ["contact", "email", "github", "linkedin", "hire"],
       response:
-        "You can contact Fathima at fathfildhap@gmail.com. Her GitHub is github.com/fildha-p. You can also connect with her through the contact section on this portfolio.",
+        "You can contact Fathima at fathfildhap@gmail.com. Her phone number is +91 9778731576, GitHub is github.com/fildha-p, and LinkedIn is linkedin.com/in/fathima-fildha.",
     },
   ],
 };
@@ -148,18 +142,19 @@ export default function AITerminal() {
       scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
     }
   }, [messages, isTyping]);
+
   useEffect(() => {
-  const hasSeenAssistant = sessionStorage.getItem("seenPortfolioAssistant");
+    const hasSeenAssistant = sessionStorage.getItem("seenPortfolioAssistant");
 
-  if (!hasSeenAssistant) {
-    const timer = setTimeout(() => {
-      setIsOpen(true);
-      sessionStorage.setItem("seenPortfolioAssistant", "true");
-    }, 3000);
+    if (!hasSeenAssistant) {
+      const timer = setTimeout(() => {
+        setIsOpen(true);
+        sessionStorage.setItem("seenPortfolioAssistant", "true");
+      }, 3000);
 
-    return () => clearTimeout(timer);
-  }
-}, []);
+      return () => clearTimeout(timer);
+    }
+  }, []);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -319,12 +314,11 @@ export default function AITerminal() {
         )}
       </AnimatePresence>
 
-
       {!isOpen && (
-  <div className="mb-2 rounded-full bg-[#D183A9]/20 px-4 py-2 text-s text-[#F3C8DD] shadow-md backdrop-blur-md animate-bounce">
-    Ask me anything 👋
-  </div>
-)}
+        <div className="mb-2 rounded-full bg-[#D183A9]/20 px-4 py-2 text-s text-[#F3C8DD] shadow-md backdrop-blur-md animate-bounce">
+          Ask me anything
+        </div>
+      )}
 
       <button
         onClick={() => setIsOpen(!isOpen)}

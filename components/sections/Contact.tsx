@@ -1,6 +1,7 @@
 "use client";
 import { useState, useRef } from "react";
 import emailjs from '@emailjs/browser';
+import { contactData } from "@/data/portfolioData";
 
 export default function Contact() {
   const form = useRef<HTMLFormElement>(null);
@@ -8,22 +9,36 @@ export default function Contact() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!form.current) return;
     
     setLoading(true);
     setError(false);
 
-    // Simulated loading and success for demo purposes without needing real API keys.
-    setTimeout(() => {
+    const serviceId = process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID;
+    const templateId = process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID;
+    const publicKey = process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY;
+
+    if (!serviceId || !templateId || !publicKey) {
       setLoading(false);
+      setError(true);
+      return;
+    }
+
+    try {
+      await emailjs.sendForm(serviceId, templateId, form.current, {
+        publicKey,
+      });
+
       setSubmitted(true);
-      if (form.current) form.current.reset();
-      
-      // Hide success overlay after 3 seconds
+      form.current.reset();
       setTimeout(() => setSubmitted(false), 3000);
-    }, 1500);
+    } catch {
+      setError(true);
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -32,10 +47,10 @@ export default function Contact() {
         
         <div className="text-center">
           <h2 className="font-playfair text-4xl md:text-5xl font-bold text-[#F3C8DD]">
-            Let's Build Something Meaningful
+            {contactData.headline}
           </h2>
           <p className="font-jetbrains-mono text-[14px] text-[#D183A9] mt-4 tracking-widest uppercase">
-            Ready to collaborate?
+            {contactData.subtext}
           </p>
         </div>
 

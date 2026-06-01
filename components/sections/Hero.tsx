@@ -1,10 +1,11 @@
 "use client";
 import { Canvas, useFrame } from "@react-three/fiber";
 import { Icosahedron, Float } from "@react-three/drei";
-import { useRef, useState, MouseEvent } from "react";
+import { useRef, useState, useEffect, MouseEvent } from "react";
 import * as THREE from "three";
 
 import { motion, AnimatePresence } from "framer-motion";
+import { heroData } from "@/data/portfolioData";
 
 function HeroShape() {
   const meshRef = useRef<THREE.Mesh>(null);
@@ -30,6 +31,12 @@ export default function Hero() {
   const [isPhotoHovered, setIsPhotoHovered] = useState(false);
   const photoRef = useRef<HTMLDivElement>(null);
   const [photoRotate, setPhotoRotate] = useState({ x: 0, y: 0 });
+  const [showPulse, setShowPulse] = useState(true);
+
+  useEffect(() => {
+    const timer = setTimeout(() => setShowPulse(false), 3500);
+    return () => clearTimeout(timer);
+  }, []);
 
   const handlePhotoMouseMove = (e: MouseEvent<HTMLDivElement>) => {
     if (!photoRef.current) return;
@@ -88,7 +95,7 @@ export default function Hero() {
             variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }}
             className="font-inter text-[var(--color-text-body)] text-lg max-w-xl mt-4 leading-relaxed"
           >
-            Building with Python. Thinking with AI. Designing with React. I create scalable web applications combining clean backend logic with intuitive user experiences.
+            {heroData.subheadline}
           </motion.p>
           
           <motion.div 
@@ -113,10 +120,11 @@ export default function Hero() {
         </motion.div>
         
         {/* Right Side: Photo with 3D Canvas */}
-        <div 
-          className="shrink-0 relative z-20 flex justify-center items-center w-[300px] h-[360px] md:w-[350px] md:h-[450px]"
-          style={{ perspective: "1000px" }}
-        >
+        <div className="shrink-0 relative z-20 flex flex-col items-center gap-3">
+          <div 
+            className="relative flex justify-center items-center w-[300px] h-[360px] md:w-[350px] md:h-[450px]"
+            style={{ perspective: "1000px" }}
+          >
           {/* Absolutely positioned small 3D Canvas behind the image */}
           <div className="absolute inset-0 z-0 pointer-events-none -left-12 -top-12 scale-150 opacity-60">
             <Canvas camera={{ position: [0, 0, 5], fov: 45 }}>
@@ -132,6 +140,8 @@ export default function Hero() {
             onMouseEnter={() => setIsPhotoHovered(true)}
             onMouseLeave={handlePhotoMouseLeave}
             onClick={() => setIsModalOpen(true)}
+            title="Click to view profile"
+            aria-label="View profile card"
             className="relative cursor-pointer group w-full h-full flex justify-center items-center"
             style={{ 
               transform: `rotateX(${photoRotate.x}deg) rotateY(${photoRotate.y}deg) scale(${isPhotoHovered ? 1.05 : 1})`,
@@ -148,6 +158,17 @@ export default function Hero() {
               }}
             />
 
+            {/* One-time pulse ring on load */}
+            {showPulse && (
+              <div className="absolute inset-0 z-10 pointer-events-none rounded-[24px]"
+                style={{
+                  animation: 'pulsePink 1.4s ease-out infinite',
+                  border: '2px solid rgba(209,131,169,0.5)',
+                  borderRadius: '24px',
+                }}
+              />
+            )}
+
             {/* Decorative ring */}
             <div className="absolute inset-4 border border-[#D183A9]/30 rounded-[28px] rotate-6 scale-105 transition-transform duration-700 group-hover:rotate-12 group-hover:border-[#D183A9]/60 group-hover:scale-110 z-10 pointer-events-none" />
             
@@ -157,7 +178,32 @@ export default function Hero() {
               className="w-[280px] h-[340px] md:w-[320px] md:h-[400px] object-cover object-top rounded-[24px] border-2 border-[rgba(209,131,169,0.4)] shadow-[0_0_40px_rgba(209,131,169,0.15)] group-hover:shadow-[0_20px_50px_rgba(209,131,169,0.4)] block relative z-20 transition-shadow duration-500"
               style={{ transform: "translateZ(20px)" }} // Pop the image out from the frame slightly
             />
+
+            {/* Hover overlay label */}
+            <div className="absolute bottom-6 left-1/2 -translate-x-1/2 z-30 pointer-events-none">
+              <div 
+                className="px-4 py-1.5 rounded-full border border-[#D183A9]/60 bg-[rgba(11,15,25,0.75)] backdrop-blur-sm font-jetbrains-mono text-xs text-[#D183A9] tracking-widest whitespace-nowrap transition-all duration-300"
+                style={{ 
+                  opacity: isPhotoHovered ? 1 : 0,
+                  transform: isPhotoHovered ? 'translateY(0px)' : 'translateY(6px)'
+                }}
+              >
+                ✦ View Profile
+              </div>
+            </div>
           </div>
+          </div>
+
+          {/* Permanent click hint below photo */}
+          <motion.p
+            className="font-jetbrains-mono text-xs text-[#71557A] tracking-widest flex items-center gap-1.5 select-none"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 1.2, duration: 1 }}
+          >
+            <span>👆</span>
+            <span>click to know more</span>
+          </motion.p>
         </div>
       </div>
 
@@ -196,13 +242,14 @@ export default function Hero() {
                 <img src="/profile.jpg" alt="Fathima" className="w-full h-full object-cover object-top" />
               </div>
               
+              <p className="font-jetbrains-mono text-[#71557A] text-xs tracking-[0.2em] uppercase mb-3">✦ Profile</p>
               <h3 className="font-playfair text-2xl font-bold text-[#F3C8DD] mb-1">Fathima Fildha</h3>
               <p className="font-inter text-[#D183A9] text-sm font-medium mb-6 uppercase tracking-widest">Full Stack Developer</p>
               
               <div className="w-full flex flex-col gap-3 font-jetbrains-mono text-sm text-[var(--color-text-body)]">
                 <div className="flex justify-between border-b border-[#3A345B]/50 pb-2">
                   <span className="text-[#71557A]">Location:</span>
-                  <span className="text-[#F3C8DD]">Kerala, India</span>
+                  <span className="text-[#F3C8DD]">Malappuram, Kerala, India</span>
                 </div>
                 <div className="flex justify-between border-b border-[#3A345B]/50 pb-2">
                   <span className="text-[#71557A]">Status:</span>
@@ -210,13 +257,13 @@ export default function Hero() {
                 </div>
                 <div className="flex justify-between border-b border-[#3A345B]/50 pb-2">
                   <span className="text-[#71557A]">Focus:</span>
-                  <span className="text-[#F3C8DD] text-right ml-4">Fullstack, Python, React, GenAI</span>
+                  <span className="text-[#F3C8DD] text-right ml-4">Django, React, PostgreSQL, GenAI</span>
                 </div>
               </div>
 
               <a 
                 href="/resume.pdf" 
-                download="resume.pdf"
+                download="Fathima_Fildha_P.pdf"
                 className="mt-8 w-full py-3 bg-[rgba(209,131,169,0.1)] hover:bg-[#D183A9] text-[#D183A9] hover:text-white border border-[#D183A9]/50 hover:border-transparent rounded-xl font-jetbrains-mono text-sm font-bold transition-all text-center flex items-center justify-center gap-2"
               >
                 <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" /></svg>

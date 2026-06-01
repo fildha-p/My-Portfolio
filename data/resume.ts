@@ -6,6 +6,7 @@ Malappuram, Kerala, India
 
 Contact:
 Email: fathfildhap@gmail.com
+Phone: +91 9778731576
 
 Links:
 Portfolio: https://my-portfolio-qein.vercel.app/
@@ -13,7 +14,7 @@ GitHub: https://github.com/fildha-p
 LinkedIn: https://www.linkedin.com/in/fathima-fildha
 
 Professional Summary:
-I am a Python Full Stack Developer with hands-on experience building full stack web applications using Django, React, MySQL, HTML, and CSS. I have worked on backend systems, frontend-backend integration, responsive database-driven applications, CRUD functionality, and authentication. I am currently exploring Generative AI concepts through AI agents, structured LLM applications, prompt engineering, and retrieval-based systems. I am detail-oriented, user-focused, and interested in building practical software.
+I am a Python Full Stack Developer with hands-on production experience building and deploying full stack web applications using Django, React, MySQL, and PostgreSQL. I have worked on live deployments on AWS and integrated third-party services including Razorpay and Zoho. I am actively exploring Generative AI through OpenAI API, prompt engineering, image generation, and AI-powered application development. I am detail-oriented, user-focused, and interested in building practical, scalable software.
 
 Technical Skills:
 Python
@@ -26,6 +27,7 @@ React JS
 Django
 REST API
 MySQL
+PostgreSQL
 NumPy
 Pandas
 Matplotlib
@@ -35,14 +37,17 @@ Pydantic
 Streamlit
 Git
 GitHub
+AWS
+Razorpay Integration
+Zoho Integration
 VS Code
 CRUD Operations
 Authentication
 Session Handling
 Prompt Engineering
-AI Agents
-Structured LLM Applications
 OpenAI API
+Image Generation
+Structured LLM Applications
 n8n
 
 Soft Skills:
@@ -54,13 +59,24 @@ Team Collaboration
 Communication Skills
 
 Work Experience:
+
+Software Developer
+Void Vector Ventures LLP, Calicut, Kerala
+March 2026 to Present
+
+Responsibilities:
+- Built and deployed the company website using Django, Python, and PostgreSQL, hosted on AWS.
+- Integrated Razorpay payment gateway and Zoho CRM tools into the platform.
+- Contributing to software development, device integration, and product development workflows.
+- Gaining hands-on experience in both hardware and software systems in a fast-paced product environment.
+
 Python Full Stack Development + Gen AI Intern
-HACA, Calicut
+HACA, Calicut, Kerala
 September 2025 to March 2026
 
 Responsibilities:
 - Built full stack web application features using Django, React, and MySQL.
-- Developed backend modules, CRUD workflows, and data management features.
+- Developed backend modules, CRUD workflows, and data management features for web applications.
 - Integrated frontend components with backend services and authentication-based access flows.
 - Worked on AI-assisted workflow automation and gained hands-on exposure to Generative AI development tasks.
 
@@ -71,28 +87,31 @@ Projects:
 - Developed backend logic in Django to manage assessments, skill levels, roles, and user progress tracking.
 - Designed a dynamic dashboard to display performance insights, readiness scores, and skill progression.
 - Integrated MySQL database operations for storing assessment records, role mappings, and user data.
-- Implemented CRUD functionality for managing assessments, skills, and progress-related records.
-- Added user authentication and session-based access control for secure personalized usage.
+- Implemented CRUD functionality and session-based authentication for secure personalized usage.
 
-2. My Wedding Planner
+2. AI Data Analyst
+- Built a Streamlit application allowing users to upload CSV files, explore datasets, and generate AI-powered insights.
+- Implemented automatic column detection, summary statistics, and data visualizations using Pandas and Matplotlib.
+- Integrated OpenAI API to generate business insights, key findings, and recommendations from dataset summaries.
+- Built a natural language Q&A feature enabling users to ask questions about their data in plain English.
+
+3. Wedding/Party Theme Generator
+- Built a multi-step AI-powered Streamlit app to generate complete event branding from user inputs.
+- Chained multiple OpenAI API calls to generate theme title, tagline, invitation text, decoration ideas, and color palette.
+- Integrated image generation using OpenAI's image model to produce AI-designed invitation card visuals.
+- Implemented session state management to persist outputs and reset on input changes.
+
+4. Branding Assistant
+- Built a Streamlit app that generates brand names, slogans, and AI-designed logos from a business idea.
+- Used OpenAI API to suggest creative brand names and contextually aligned slogans.
+- Integrated AI image generation to produce logo designs based on brand name, style, and business concept.
+
+5. My Wedding Planner
 - Developed a web-based event planning application supporting CRUD operations for managing wedding events.
 - Implemented Redux Persist for maintaining application state across sessions.
 - Built form validation logic and budget tracking features for event management.
 - Designed a responsive user interface using Tailwind CSS.
-
-3. AI Agent Explorer
-- Built an AI application demonstrating agent-based workflows using structured LLM outputs and external API integration.
-- Implemented structured response handling using Pydantic for reliable data formatting and validation.
-- Developed a recipe generation workflow and integrated web research capabilities through API-based tools.
-- Created an interactive Streamlit interface for testing and exploring AI-driven workflows.
-
-4. Community Complaint & Issue Reporting System
-- Built a CRUD-based complaint management system for submitting, tracking, and managing community issues with a MySQL backend.
-- Designed database tables for complaint data and user submissions with efficient storage and retrieval logic.
-
-5. Election Vote Percentage Calculator
-- Built a Python data analysis application to process and analyze candidate vote data using Pandas and NumPy.
-- Generated bar and pie chart visualizations using Matplotlib to present vote distribution and percentage statistics.
+- Live demo: https://my-portfolio-qein.vercel.app/
 
 Education:
 Bachelor of Technology in Computer Science Engineering

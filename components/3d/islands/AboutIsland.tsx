@@ -4,6 +4,7 @@ import Island from "../Island";
 import { useRef } from "react";
 import { useFrame } from "@react-three/fiber";
 import * as THREE from "three";
+import { aboutData } from "@/data/portfolioData";
 
 export default function AboutIsland({ position }: { position: [number, number, number] }) {
   const { activeIsland } = useNavigation();
@@ -11,8 +12,8 @@ export default function AboutIsland({ position }: { position: [number, number, n
 
   const codeString = `const fathima = {
   role: "Full Stack Developer",
-  stack: ["Django", "React", "Python"],
-  exploring: ["AI Agents", "LLMs", "OpenAI"],
+  stack: ["Django", "React", "PostgreSQL", "AWS"],
+  exploring: ["OpenAI API", "Streamlit", "Image Generation"],
   status: "open_to_opportunities",
   location: "Kerala, India 🌴"
 };`;

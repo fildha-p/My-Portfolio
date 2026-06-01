@@ -1,50 +1,17 @@
 "use client";
 import { useState, useRef, MouseEvent } from "react";
+import { motion, Variants } from "framer-motion";
+import { projectsData } from "@/data/portfolioData";
 
-const PROJECTS = [
-  { 
-    title: "SkillMap", 
-    desc: "Role readiness assessment platform that evaluates user skills and maps them to career roles. Includes dynamic dashboards, scoring systems, and secure session-based authentication.", 
-    tags: ["Django", "MySQL", "HTML", "CSS", "JavaScript"],
-    github: "https://github.com/fildha-p",
-    liveDemo: null,
-    image: "/images/skillmap.png"
-  },
-  { 
-    title: "My Wedding Planner", 
-    desc: "A responsive event planning web app that helps manage budgets, vendors, and event tasks. State persistence ensures smooth planning across sessions.", 
-    tags: ["React", "Redux Persist", "Tailwind CSS"],
-    github: "https://github.com/fildha-p",
-    liveDemo: "https://my-wedding-planner-five.vercel.app/",
-    image: "/images/wedding-planner.png"
-  },
-  { 
-    title: "Community Complaint & Issue Reporting", 
-    desc: "A community management platform enabling residents to submit, track, and resolve local issues. Built with CRUD workflows and MySQL backend.",
-    tags: ["Python", "MySQL"],
-    github: "https://github.com/fildha-p",
-    liveDemo: null,
-    image: "/images/complaint-system.png"
-  },
-  { 
-    title: "AI Agent Explorer", 
-    desc: "An experimental AI application demonstrating agent-based workflows using OpenAI APIs. Generates recipes, performs web research, and executes tool-based actions.",
-    tags: ["Python", "OpenAI API", "Pydantic", "Streamlit"],
-    github: "https://github.com/fildha-p",
-    liveDemo: null,
-    image: "/images/ai-agent-explorer.png"
-  },
-  { 
-    title: "Election Vote Percentage Calculator", 
-    desc: "A data analysis tool that processes election data and visualizes vote distributions with dynamic bar and pie chart generation.",
-    tags: ["Python", "NumPy", "Pandas", "Matplotlib"],
-    github: "https://github.com/fildha-p",
-    liveDemo: null,
-    image: "/images/election-calculator.png"
-  }
-];
+const PROJECT_IMAGES: Record<number, string> = {
+  1: "/images/skillmap.png",
+  2: "/images/ai-agent-explorer.png",
+  3: "/images/wedding-planner.png",
+  4: "/images/ai-agent-explorer.png",
+  5: "/images/wedding-planner.png",
+};
 
-function ProjectCard({ proj }: { proj: typeof PROJECTS[0] }) {
+function ProjectCard({ proj }: { proj: typeof projectsData[0] }) {
   const cardRef = useRef<HTMLDivElement>(null);
   const [rotate, setRotate] = useState({ x: 0, y: 0 });
   const [isHovered, setIsHovered] = useState(false);
@@ -100,7 +67,7 @@ function ProjectCard({ proj }: { proj: typeof PROJECTS[0] }) {
           <div className="absolute inset-0 shadow-[inset_0_0_0_rgba(209,131,169,0)] group-hover:shadow-[inset_0_0_20px_rgba(209,131,169,0.3)] rounded-t-[20px] transition-shadow duration-500 z-10 pointer-events-none" />
           
           <img 
-            src={proj.image} 
+            src={PROJECT_IMAGES[proj.id] ?? "/images/ai-agent-explorer.png"} 
             alt={proj.title} 
             className="w-full h-full object-cover rounded-t-[20px] transition-all duration-700 group-hover:scale-110 opacity-90 group-hover:opacity-100 mix-blend-lighten"
           />
@@ -112,7 +79,7 @@ function ProjectCard({ proj }: { proj: typeof PROJECTS[0] }) {
             {proj.title}
           </h3>
           <p className="font-inter text-[var(--color-text-body)] text-[15px] leading-relaxed flex-grow">
-            {proj.desc}
+            {proj.description}
           </p>
           
           <div className="flex flex-wrap gap-2 mt-2" style={{ transform: isHovered ? "translateZ(20px)" : "translateZ(0px)", transition: "transform 0.3s" }}>
@@ -124,12 +91,12 @@ function ProjectCard({ proj }: { proj: typeof PROJECTS[0] }) {
           </div>
 
           <div className="flex gap-4 mt-6 pt-6 border-t border-[rgba(209,131,169,0.1)]" style={{ transform: isHovered ? "translateZ(40px)" : "translateZ(0px)", transition: "transform 0.3s" }}>
-            {proj.liveDemo && (
-              <a href={proj.liveDemo} target="_blank" rel="noreferrer" className="flex-1 py-2.5 bg-[#D183A9]/10 text-[#D183A9] hover:bg-[#D183A9] hover:text-white rounded-full font-jetbrains-mono text-[13px] font-bold transition-colors text-center cursor-pointer border border-[#D183A9]/50 hover:border-transparent">
-                Live Demo ↗
+            {proj.links.view !== "#" && (
+              <a href={proj.links.view} target="_blank" rel="noreferrer" className="flex-1 py-2.5 bg-[#D183A9]/10 text-[#D183A9] hover:bg-[#D183A9] hover:text-white rounded-full font-jetbrains-mono text-[13px] font-bold transition-colors text-center cursor-pointer border border-[#D183A9]/50 hover:border-transparent">
+                Live Demo
               </a>
             )}
-            <a href={proj.github} target="_blank" rel="noreferrer" className="flex-1 py-2.5 bg-transparent border border-[#71557A] text-[#F3C8DD] rounded-full font-jetbrains-mono text-[13px] font-bold hover:bg-[#71557A]/20 transition-colors text-center cursor-pointer">
+            <a href={proj.links.github} target="_blank" rel="noreferrer" className="flex-1 py-2.5 bg-transparent border border-[#71557A] text-[#F3C8DD] rounded-full font-jetbrains-mono text-[13px] font-bold hover:bg-[#71557A]/20 transition-colors text-center cursor-pointer">
               GitHub
             </a>
           </div>
@@ -138,8 +105,6 @@ function ProjectCard({ proj }: { proj: typeof PROJECTS[0] }) {
     </div>
   );
 }
-
-import { motion, Variants } from "framer-motion";
 
 export default function Projects() {
   const containerVariants: Variants = {
@@ -176,7 +141,7 @@ export default function Projects() {
           viewport={{ once: true, margin: "-100px" }}
           className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
         >
-          {PROJECTS.map((proj, idx) => (
+          {projectsData.map((proj, idx) => (
             <motion.div key={idx} variants={itemVariants}>
               <ProjectCard proj={proj} />
             </motion.div>

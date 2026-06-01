@@ -1,5 +1,6 @@
 "use client";
 import { motion } from "framer-motion";
+import { experienceData } from "@/data/portfolioData";
 
 export default function Experience() {
   return (
@@ -30,52 +31,49 @@ export default function Experience() {
           />
           
           <div className="flex flex-col gap-16 w-full">
-            
-            {/* Experience Item */}
-            <motion.div 
-              initial={{ opacity: 0, x: 50 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true, margin: "-100px" }}
-              transition={{ duration: 0.7, delay: 0.2 }}
-              className="relative flex flex-col md:flex-row items-start md:items-center justify-between w-full group"
-            >
-              {/* Timeline Dot */}
-              <div className="absolute left-6 md:left-1/2 w-4 h-4 rounded-full bg-[#D183A9] border-[4px] border-[#1a1118] -translate-x-1/2 mt-6 md:mt-0 shadow-[0_0_15px_rgba(209,131,169,0.8)] z-10 transition-transform group-hover:scale-125" />
-              
-              {/* Left Side (Empty on Desktop for timeline alignment) */}
-              <div className="hidden md:block md:w-[45%]" />
-              
-              {/* Content Box */}
-              <div className="w-full md:w-[45%] pl-16 md:pl-0 bg-[rgba(11,15,25,0.7)] backdrop-blur-md p-8 rounded-2xl border border-[rgba(209,131,169,0.2)] hover:border-[#D183A9]/50 transition-colors shadow-lg relative">
-                <span className="absolute -top-4 right-8 bg-[#3A345B] text-[#D183A9] px-4 py-1 rounded-full text-xs font-jetbrains-mono font-bold border border-[#71557A]">
-                  Sep 2025 — Mar 2026
-                </span>
+            {experienceData.map((exp, idx) => (
+              <motion.div 
+                key={exp.id}
+                initial={{ opacity: 0, x: idx % 2 === 0 ? 50 : -50 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true, margin: "-100px" }}
+                transition={{ duration: 0.7, delay: 0.2 + idx * 0.2 }}
+                className={`relative flex flex-col ${idx % 2 === 0 ? "md:flex-row" : "md:flex-row-reverse"} items-start md:items-center justify-between w-full group`}
+              >
+                {/* Timeline Dot */}
+                <div className="absolute left-6 md:left-1/2 w-4 h-4 rounded-full bg-[#D183A9] border-[4px] border-[#1a1118] -translate-x-1/2 mt-6 md:mt-0 shadow-[0_0_15px_rgba(209,131,169,0.8)] z-10 transition-transform group-hover:scale-125" />
                 
-                <h3 className="font-jetbrains-mono font-bold text-xl text-[#D183A9] mb-1">
-                  HACA Calicut
-                </h3>
-                <h4 className="font-inter text-md text-[#F3C8DD] mb-1 font-medium">
-                  Python Django Full Stack Developer Intern
-                </h4>
-                <p className="font-jetbrains-mono text-sm text-[#71557A] mb-4">
-                  Generative AI Track
-                </p>
+                {/* Left Side (Empty on Desktop for timeline alignment) */}
+                <div className="hidden md:block md:w-[45%]" />
                 
-                <ul className="font-inter text-sm md:text-[15px] leading-[1.7] text-[var(--color-text-body)] list-disc pl-4 space-y-2 marker:text-[#D183A9]">
-                  <li>Built full stack web application features using Django, React, and MySQL.</li>
-                  <li>Developed backend modules, CRUD workflows, and robust data management features.</li>
-                  <li>Integrated complex frontend components with secure backend services and authentication flows.</li>
-                  <li>Worked directly on AI-assisted workflow automation and Generative AI development tasks.</li>
-                </ul>
-              </div>
-            </motion.div>
+                {/* Content Box */}
+                <div className="w-full md:w-[45%] pl-16 md:pl-0 bg-[rgba(11,15,25,0.7)] backdrop-blur-md p-8 rounded-2xl border border-[rgba(209,131,169,0.2)] hover:border-[#D183A9]/50 transition-colors shadow-lg relative">
+                  <span className={`absolute -top-4 ${idx % 2 === 0 ? "right-8" : "left-16 md:left-auto md:right-8"} bg-[#3A345B] text-[#D183A9] px-4 py-1 rounded-full text-xs font-jetbrains-mono font-bold border border-[#71557A]`}>
+                    {exp.period}
+                  </span>
+                  
+                  <h3 className="font-jetbrains-mono font-bold text-xl text-[#D183A9] mb-1">
+                    {exp.company}
+                  </h3>
+                  <h4 className="font-inter text-md text-[#F3C8DD] mb-1 font-medium">
+                    {exp.role}
+                  </h4>
+                  
+                  <ul className="font-inter text-sm md:text-[15px] leading-[1.7] text-[var(--color-text-body)] list-disc pl-4 space-y-2 marker:text-[#D183A9] mt-4">
+                    {exp.bullets.map((bullet, bulletIdx) => (
+                      <li key={bulletIdx}>{bullet}</li>
+                    ))}
+                  </ul>
+                </div>
+              </motion.div>
+            ))}
 
             {/* Education Item */}
             <motion.div 
               initial={{ opacity: 0, x: -50 }}
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true, margin: "-100px" }}
-              transition={{ duration: 0.7, delay: 0.4 }}
+              transition={{ duration: 0.7, delay: 0.6 }}
               className="relative flex flex-col md:flex-row-reverse items-start md:items-center justify-between w-full group"
             >
               {/* Timeline Dot */}
@@ -87,7 +85,7 @@ export default function Experience() {
               {/* Content Box */}
               <div className="w-full md:w-[45%] pl-16 md:pl-0 pr-0 md:pr-0 bg-[rgba(11,15,25,0.4)] backdrop-blur-md p-8 rounded-2xl border border-[rgba(113,85,122,0.3)] hover:border-[#71557A]/80 transition-colors text-left md:text-right relative">
                 <span className="absolute -top-4 left-16 md:left-auto md:right-8 bg-[#1a1118] text-[#71557A] px-4 py-1 rounded-full text-xs font-jetbrains-mono font-bold border border-[#3A345B]">
-                  2021 — 2025
+                  2021 - 2025
                 </span>
                 
                 <h3 className="font-jetbrains-mono font-bold text-lg text-[#F3C8DD] mb-2 leading-tight">
